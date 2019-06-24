@@ -5,61 +5,65 @@
  * 
  * $cowSpeed = new CowSpeed(60);
  * $cowSpeed->airSpeed(); // Las vacas no vuelan
- * $chickenSpeed = new ChickenSpeed(60);
- * $chickenSpeed->airSpeed();
+ * $DuckSpeed = new DuckSpeed(60);
+ * $DuckSpeed->airSpeed();
  * 
  */
 
 interface AnimalSpeedInterface
 {
-    public function groundSpeed($seconds);
-    public function airSpeed( $seconds);
+    public function groundSpeed();
+    public function airSpeed();
 }
 
 class CowSpeed implements AnimalSpeedInterface
 {
+    protected $meters;
     protected $seconds;
-    protected $groundSpeed;
-    protected $airSpeed;
+    protected $groundFactor;
+    protected $airFactor;
 
-    public function __construct($seconds)
+    public function __construct($meters, $seconds)
     {
+        $this->meters = $meters;
         $this->seconds = $seconds;
-        $this->groundSpeed = 100;
-        $this->airSpeed = null;
+        $this->groundFactor = 1;
+        $this->airFactor = null;
     }
     public function groundSpeed()
     {
-        return $this->groundSpeed * $this->seconds;
+        return $this->groundFactor * ($this->meters / $this->seconds);
     }
 
     public function airSpeed()
     {
-        return $this->airSpeed;
+        return null;
     }
 }
 
 
-class ChickenSpeed implements AnimalSpeedInterface
+class DuckSpeed implements AnimalSpeedInterface
 {
+    protected $meters;
     protected $seconds;
-    protected $groundSpeed;
-    protected $airSpeed;
+    protected $groundFactor;
+    protected $airFactor;
 
-    public function __construct($seconds)
+    public function __construct($meters, $seconds)
     {
+        $this->meters = $meters;
         $this->seconds = $seconds;
-        $this->groundSpeed = 10;
-        $this->airSpeed = 10;
+        $this->groundFactor = 0.01;
+        $this->airFactor = 1.2;
     }
     public function groundSpeed()
     {
-        return $this->groundSpeed * $this->seconds;
+        return $this->groundFactor * ($this->meters / $this->seconds);
     }
 
     public function airSpeed()
     {
-        return $this->airSpeed * $this->seconds;
+        return $this->airFactor * ($this->meters / $this->seconds);
     }
 }
 
@@ -69,44 +73,49 @@ class ChickenSpeed implements AnimalSpeedInterface
  * 
  * $cowSpeed = new CowSpeedRefactor(60);
  * $cowSpeed->calculateSpeed(); // Las vacas no vuelan
- * $chickenSpeed = new ChickenSpeedRefactor(60);
- * $chickenSpeed->calculateSpeed();
+ * $DuckSpeed = new DuckSpeedRefactor(60);
+ * $DuckSpeed->calculateSpeed();
  */
 
 interface AnimalSpeedInterfaceRefactor
 {
-    public function calculateSpeed($seconds);
+    public function calculateSpeed();
 }
 
 class CowSpeedRefactor implements AnimalSpeedInterfaceRefactor
 {
+    protected $meters;
     protected $seconds;
-    protected $groundSpeed;
+    protected $groundFactor;
 
-    public function __construct($seconds)
+    public function __construct($meters, $seconds)
     {
+        $this->meters = $meters;
         $this->seconds = $seconds;
-        $this->groundSpeed = 100;
+        $this->groundFactor = 1;
     }
     public function calculateSpeed()
     {
-        return $this->groundSpeed * $this->seconds;
+        return $this->groundFactor * ($this->meters / $this->seconds);
     }
 
 }
 
-class ChickenSpeedRefactor implements AnimalSpeedInterfaceRefactor
+class DuckSpeedRefactor implements AnimalSpeedInterfaceRefactor
 {
+    protected $meters;
     protected $seconds;
-    protected $airSpeed;
+    protected $airFactor;
 
-    public function __construct($seconds)
+    public function __construct($meters, $seconds)
     {
+        $this->meters = $meters;
         $this->seconds = $seconds;
-        $this->airSpeed = 10;
+        $this->groundFactor = 0.01;
+        $this->airFactor = 1.2;
     }
     public function calculateSpeed()
     {
-        return $this->airSpeed * $this->seconds;
+        return $this->airFactor * ($this->meters / $this->seconds);
     }
 }
