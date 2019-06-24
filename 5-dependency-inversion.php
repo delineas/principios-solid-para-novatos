@@ -9,7 +9,7 @@
  *      new CowAnimal()
  *  ]
  * );
- * $mySqlConnection = new MySqlConnection($connexionData);
+ * $mySqlConnection = new MySqlConnection($connectionData);
  * $persist = new AnimalPersist($mySqlConnection, $patas);
  */
 
@@ -92,12 +92,12 @@ class CalculatePatas
  *      new CowAnimal()
  *  ]
  * );
- * $redisConnection = new RedisConnection($connexionData);
+ * $redisConnection = new RedisConnection($connectionData);
  * $persist = new AnimalPersistRefactor($mySqlConnection, $patas);
  */
 class MySqlConnection 
 {
-    public function  __construct($connexionData)
+    public function  __construct($connectionData)
     {
         // connect data
     }
@@ -111,9 +111,10 @@ class MySqlConnection
 class AnimalPersist
 {
 
+    private $dbConnection;
     public function __construct(MySqlConnection $mySqlConnection, CalculatePatas $calculator)
     {
-        $mySqlConnection->save($calculator->sum());
+        $this->dbConnection = $mySqlConnection;
     }
 
 }
@@ -129,7 +130,7 @@ interface PersistConnectionInterface
 
 class MySqlConnectionRefactor implements PersistConnectionInterface
 {
-    public function  __construct($connexionData)
+    public function  __construct($connectionData)
     {
         // connect data
     }
@@ -141,7 +142,7 @@ class MySqlConnectionRefactor implements PersistConnectionInterface
 
 class RedisConnection implements PersistConnectionInterface
 {
-    public function  __construct($connexionData)
+    public function  __construct($connectionData)
     {
         // connect data
     }
@@ -153,9 +154,10 @@ class RedisConnection implements PersistConnectionInterface
 
 class AnimalPersistReactor
 {
+    private $connection;
 
     public function __construct(PersistConnectionInterface $connection, CalculatePatas $calculator)
     {
-        $connection->save($calculator->sum());
+        $this->connection = $connection;
     }
 }

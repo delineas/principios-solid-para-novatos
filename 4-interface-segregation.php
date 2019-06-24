@@ -3,9 +3,9 @@
 /**
  * Violación del principio
  * 
- * $cowSpeed = new CowSpeed(60);
+ * $cowSpeed = new CowSpeed(10, 60);
  * $cowSpeed->airSpeed(); // Las vacas no vuelan
- * $DuckSpeed = new DuckSpeed(60);
+ * $DuckSpeed = new DuckSpeed(10, 60);
  * $DuckSpeed->airSpeed();
  * 
  */
@@ -71,9 +71,9 @@ class DuckSpeed implements AnimalSpeedInterface
 /**
  * Una interfaz intermedia que discrimine el cáclulo
  * 
- * $cowSpeed = new CowSpeedRefactor(60);
+ * $cowSpeed = new CowSpeedRefactor(10, 60);
  * $cowSpeed->calculateSpeed(); // Las vacas no vuelan
- * $DuckSpeed = new DuckSpeedRefactor(60);
+ * $DuckSpeed = new DuckSpeedRefactor(10, 60);
  * $DuckSpeed->calculateSpeed();
  */
 
