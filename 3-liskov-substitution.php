@@ -1,29 +1,7 @@
 <?php
 
 /**
- * Violación del principio
- * 
- * $patas = new CalculateBase(
- *  [
- *      new CowAnimal(),
- *      new ChickenAnimal(),
- *      new CowAnimal()
- *  ]
- * );
- * $orejas = new CalculateOrejas(
- *  [
- *      new CowAnimal(),
- *      new ChickenAnimal(),
- *      new CowAnimal()
- *  ]
- * );
- * 
- * $outputPatas = new OutputCalculator($patas);
- * $outputOrejas = new OutputCalculator($orejas);
- * 
- * $outputPatas->toText();
- * $outputOrejas->toText(); // Mostrará un error
- * 
+ * Clases de referencia
  */
 
 interface AnimalInterface
@@ -74,6 +52,147 @@ class ChickenAnimal implements AnimalInterface
     }
 }
 
+/**
+ * Violación del principio: modificación de precondiciones, postcondiciones
+ */
+
+class CalculateConditionsPatas
+{
+
+    protected $sum;
+    protected $animals;
+
+    public function __construct($animals = [])
+    {
+        $this->sum = 0;
+        $this->animals = $animals;
+    }
+
+    public function sum()
+    {
+        $patas = [];
+        foreach ($this->animals as $animal) {
+            if($animal->patas() > 4) {
+                throw new CalculateInvalidPatasException;
+            }
+            $patas[] = $animal->patas();
+        }
+        if(count($patas) == 0) {
+            throw new CalculateNoCountAnimalException;
+        }
+        $this->sum = array_sum($patas);
+    }
+
+    public function getSum()
+    {
+        return $this->sum;
+    }
+}
+
+
+class CalculateConditionsOrejas extends CalculateConditionsPatas
+{
+
+    public function sum()
+    {
+        $orejas = [];
+        foreach ($this->animals as $animal) {
+            // Cambiamos una precondición
+            if ($animal->patas() > 6) {
+                throw new CalculateInvalidPatasException;
+            }
+            $orejas[] = $animal->orejas();
+        }
+        // Eliminamos (cambiamos) una postcondición
+        $this->sum = array_sum($orejas);
+    }
+
+    public function getSum()
+    {
+        return $this->sum;
+    }
+}
+
+
+/**
+ * Violación del principio: modificación de invariante
+ */
+
+class CalculateFactorPatas
+{
+
+    protected $sum;
+    protected $animals;
+    protected $factor;
+
+    public function __construct($animals = [])
+    {
+        $this->sum = 0;
+        $this->animals = $animals;
+    }
+
+    public function sum()
+    {
+        $patas = [];
+        $this->factor = 3;
+        foreach ($this->animals as $animal) {
+            $patas[] = $animal->patas();
+        }
+        $this->sum = $this->factor * array_sum($patas);
+    }
+
+    public function getSum()
+    {
+        return $this->sum;
+    }
+}
+
+
+class CalculateFactorOrejas extends CalculateFactorPatas
+{
+
+    public function sum()
+    {
+        $orejas = [];
+        $this->factor = 30;
+        foreach ($this->animals as $animal) {
+            $orejas[] = $animal->orejas();
+        }
+        $this->sum = $this->factor * array_sum($orejas);
+    }
+
+    public function getSum()
+    {
+        return $this->sum;
+    }
+}
+
+
+/**
+ * Violación del principio: restricción histórica
+ * 
+ * $patas = new CalculateBase(
+ *  [
+ *      new CowAnimal(),
+ *      new ChickenAnimal(),
+ *      new CowAnimal()
+ *  ]
+ * );
+ * $orejas = new CalculateOrejas(
+ *  [
+ *      new CowAnimal(),
+ *      new ChickenAnimal(),
+ *      new CowAnimal()
+ *  ]
+ * );
+ * 
+ * $outputPatas = new OutputCalculator($patas);
+ * $outputOrejas = new OutputCalculator($orejas);
+ * 
+ * $outputPatas->toText();
+ * $outputOrejas->toText(); // Mostrará un error
+ * 
+ */
 
 class CalculateBase
 {
@@ -91,11 +210,7 @@ class CalculateBase
     {
         $patas = [];
         foreach ($this->animals as $animal) {
-            if ($animal instanceof AnimalInterface) {
-                $patas[] = $animal->patas();
-                continue;
-            }
-            throw new CalculatorPatasInvalidAnimalException;
+            $patas[] = $animal->patas();
         }
         $this->sum = array_sum($patas);
     }
@@ -112,11 +227,7 @@ class CalculateOrejas extends CalculateBase
     {
         $orejas = [];
         foreach ($this->animals as $animal) {
-            if ($animal instanceof AnimalInterface) {
                 $orejas[] = $animal->orejas();
-                continue;
-            }
-            throw new CalculateOrejasInvalidAnimalException;
         }
         /**
          * No es una suma, es un array. 
