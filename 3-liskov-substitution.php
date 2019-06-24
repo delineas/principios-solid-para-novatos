@@ -77,9 +77,6 @@ class CalculateConditionsPatas
             }
             $patas[] = $animal->patas();
         }
-        if(count($patas) == 0) {
-            throw new CalculateNoCountAnimalException;
-        }
         $this->sum = array_sum($patas);
     }
 
@@ -103,7 +100,10 @@ class CalculateConditionsOrejas extends CalculateConditionsPatas
             }
             $orejas[] = $animal->orejas();
         }
-        // Eliminamos (cambiamos) una postcondición
+        // Debilitamos la poscondicion, añadiendo un caso que ponemos a 0
+        if(count($orejas) == 2) {
+            $orejas[1] = 0;
+        }
         $this->sum = array_sum($orejas);
     }
 
