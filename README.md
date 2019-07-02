@@ -16,59 +16,67 @@ Un buen día, los granjeros más motivados que trabajan en la cooperativa Web Re
 
 Los ultra motivados granjeros crearon su primera versión de la calculadora.
 
-```
-💪 Ejercicio 1. 
-Primero échale un ojo o dos al primer programa del archivo: 1-single-responsability.php
+--- 
 
-Pregunta:
+💪 **Ejercicio 1.** Primero échale un ojo o dos al primer programa del archivo: 1-single-responsability.php
+
+**Pregunta:**
 
 ¿Cuantas cosas crees que hace esta clase? 🤔🤔🤔
-```
-```php  
-Respuesta:
+
+**Respuesta:**
 
 ❌ Una. Nooop!! Granjero busca pata.
+
 ✅ Más de una. Siiii!!! Fíjate bien en lo que hace el programa.
 
-// Instanciamos la calculadora con las patas 
+```php  
+  // Instanciamos la calculadora con las patas 
 
-$patas = new CalculatePatas([4,2,4]);
-$patas->sum(); // Acción 1
-$patas->print(); // Acción 2
+  $patas = new CalculatePatas([4,2,4]);
+  $patas->sum(); // Acción 1
+  $patas->print(); // Acción 2
 
-    ¿y cúal es el problema? a continuación ...
-    
-    Una pista: La misma clase contiene funcionalidad para hacer dos acciones de diferente naturaleza (calcula e imprime).
+  // ¿y cúal es el problema? a continuación ...
 ```
+
+> Una pista: La misma clase contiene funcionalidad para hacer dos acciones de diferente naturaleza (calcula e imprime).
+
+---
 
 Los granjeros ultra motivados enseñan su calculadora a toda la cooperativa. Uno de los cooperativistas propone la idea de conectar la calculadora con una web donde mostrar el número total de las patas de la granja y acceder al record Guiness de la granja con más patas del mundo. La web es una página desacoplada y solo acepta json como formato de datos. 
 
 Los granjeros tienen un dilema: 
 
+--- 
+💪 ***Ejercicio 2***
+¿Cómo cambiamos la calculadora para que como salida del total de patas, 
+para que también tenga la posibilidad de tener como salida json? 🤔🤔🤔
+
+***Respuestas:***
+
+❌ Modificar el código actual para que devuelva un json.
+
+```php
+  $patas->toJson();
 ```
-💪 Ejercicio 2. 
-
-¿Cómo cambiamos la calculadora para que como salida del total de patas, también tenga la posibilidad de tener como salida json? 🤔🤔🤔
-```
-
-```php 
-Respuestas:
-
-❌ Modificar el código actual para que devuelva un json. 
-
-    $patas->toJson();
-
-    Un granjero argumenta acertádamente, que si hacemos eso, corremos el riesgo de: 1. Afectar al código que realizar la suma, introduciendo efectos colaterales y ¿qué pasará cuando nos pidan otros formatos?. ¿Usar la misma clase para todo no sonaba correcto?.
+Un granjero argumenta acertádamente, que si hacemos eso, corremos el riesgo de: 1. Afectar al código que realizar la suma, introduciendo efectos colaterales y ¿qué pasará cuando nos pidan otros formatos?. ¿Usar la misma clase para todo no sonaba correcto?.
 
 ✅ Crear una clase que se encargue de la impresión y salida del resultado. Biennn!!!! 
 
-    Principio de Responsabilidad único al rescate (Single Responsability)
-```
+***Principio de Responsabilidad único al rescate (Single Responsability)***
+
+---
+
+📚 ***Un poco de teoria***
+
 El principio de responsabilidad nos dice:
 
 > Una clase debería tener sólo una razón para cambiar
 
 Es decir, cuando nuestras clases hacen una cosa, pero la hacen bien, los motivos por los puedan cambiar siempre estarán relacionados con su función principal. 
+
+----
 
 Los granjeros se emocionan al conocer este principio y empiezan a refactorizar el código. 
 
