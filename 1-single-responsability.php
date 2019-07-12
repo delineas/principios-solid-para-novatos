@@ -6,14 +6,14 @@
  * $patas = new CalculatePatas(
  *  [4,2,4]
  * );
- * $patas->pint();
- * 
+ * $patas->sum();
+ * $patas->print();
  */
 
 class CalculatePatas {
 
-    protected $sum;
-    protected $animals;
+    private $sum;
+    private $animals;
 
     public function __construct($animals = []) 
     {
@@ -28,7 +28,7 @@ class CalculatePatas {
 
     public function print() 
     {
-        return "Calculo ejecutado \n\n Los animales suman  " . $this->sum . " patas." ;
+        return "Calculo ejecutado \n\n Los animales suman {$this->sum} patas." ;
     }
 }
 
@@ -39,16 +39,18 @@ class CalculatePatas {
  * $patas = new CalculatePatasRefactor(
  *  [4,2,4]
  * );
- * $output = new OutputPatas($patas->sum());
+ * $patas->sum();
+ * 
+ * $output = new OutputPatas($patas->getSum());
  * $output->toText();
- * $output->toJson();
+ * output->toJson();
  * 
  */
 
 class CalculatePatasRefactor {
 
-    protected $sum;
-    protected $animals;
+    private $sum;
+    private $animals;
 
     public function __construct($animals = []) 
     {
@@ -69,7 +71,7 @@ class CalculatePatasRefactor {
 
 class OutputPatas {
 
-    protected $patas;
+    private $patas;
 
     public function __construct($patas = 0)
     {
@@ -78,7 +80,7 @@ class OutputPatas {
 
     public function toText() 
     {
-        return "Calculo ejecutado \n\n Los animales suman  " . $this->patas . " patas.";
+        return "Calculo ejecutado \n\n Los animales suman {$this->patas} patas.";
     }
 
     public function toJson()
