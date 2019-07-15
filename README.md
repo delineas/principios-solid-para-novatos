@@ -50,8 +50,7 @@ Los granjeros tienen un dilema:
 
 --- 
 💪 ***Ejercicio 2***
-¿Cómo cambiamos la calculadora para que como salida del total de patas, 
-para que también tenga la posibilidad de tener como salida json? 🤔🤔🤔
+¿Cómo cambiamos la calculadora para que además de dar como salida el total de patas, también tenga la posibilidad de dar el total de patas en formato json? 🤔🤔🤔
 
 ***Respuestas:***
 
